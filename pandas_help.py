@@ -4,7 +4,7 @@ import matplotlib
 #1 CRIAR O DATAFRAME
 #dataframe = pandas.read_csv('DATABASES/data.csv') # criei um csv sem os espacos
 
-dataframe = pandas.read_csv('DATABASES/data.txt', delimiter=', ', engine='python') 
+dataframe = pandas.read_csv('DATABASES/data.txt', delimiter=', ', engine='python') #preciso especificar engine python nesse caso
 # posso ler direto do txt, mesmo tendo 'espacos' entre as colunas.
 
 #2 LER O DATAFRAME
@@ -15,10 +15,8 @@ print(dataframe.columns) # todas colunas
 print(dataframe['EXG Channel 0']) # coluna especifica
 print(dataframe.dtypes) # tipos das colunas
 
-print(dataframe.describe()) # explica / faz um sumario
-# mas so funciona em tipos numericos
-print(dataframe.describe(include='object'))
-# fala um pouco sobre suas especifidades.
+print(dataframe.describe()) # explica / faz um sumario mas so funciona em tipos numericos
+print(dataframe.describe(include='object')) # faz so com objetos / nomes
 
 print(dataframe[['Sample Index','EXG Channel 0']]) # multiplas colunas
 print(dataframe['Sample Index'].unique()) # todos valores unicos.
@@ -32,7 +30,7 @@ print(dataframe.iloc[280,0]) # LINHA E COLUNA
 
 print(dataframe.iloc[0:256]) # CORTAR UM SEGMENTO DE DADOS.
 
-#3 CHECAR DATAFRAME
+#3 CHECAR/ATUALIZAR DATAFRAME
 
 print(dataframe.isnull().sum()) # numero de linhas com colunas faltando/ valores nulos
 
@@ -58,8 +56,7 @@ print(dataframe.loc[dataframe['Timestamp (Formatted)'].str.contains('15:41:52')]
 print(dataframe.loc[(dataframe['Accel Channel 2'] > 0)])
 print(dataframe.loc[~(dataframe['Accel Channel 2'] > 0)])
 
-# aplicar filtros com ifs
-
+# aplicar filtros com CONDICOES (IFS)
 dataframe['ACCEL 0 MODULE'] = dataframe['Accel Channel 0'].apply(lambda x: '+' if x>0 else '-') 
 
 #SORT!
@@ -74,7 +71,11 @@ dataframe.sort_values('Timestamp')
 print(dataframe)
 
 # MUDAR COLUNAS DE LUGAR
-dataframe = dataframe[['Timestamp (Formatted)', 'Sample Index', 'EXG Channel 0', 'EXG Channel 1', 'EXG Channel 2', 'EXG Channel 3', 'EXG Channel 4', 'EXG Channel 5', 'EXG Channel 6', 'EXG Channel 7', 'Accel Channel 0', 'Accel Channel 1', 'Accel Channel 2', 'Other', 'Other.1', 'Other.2', 'Other.3', 'Other.4', 'Other.5', 'Other.6', 'Other.7', 'Analog Channel 0', 'Analog Channel 1', 'Analog Channel 2', 'Timestamp']] # aqui entra a ordem
+dataframe = dataframe[['Timestamp (Formatted)', 'Sample Index', 'EXG Channel 0', 'EXG Channel 1', 'EXG Channel 2', \
+    'EXG Channel 3', 'EXG Channel 4', 'EXG Channel 5', 'EXG Channel 6', 'EXG Channel 7', 'Accel Channel 0', \
+        'Accel Channel 1', 'Accel Channel 2', 'Other', 'Other.1', 'Other.2', 'Other.3', 'Other.4', 'Other.5', \
+            'Other.6', 'Other.7', 'Analog Channel 0', 'Analog Channel 1', 'Analog Channel 2', 'Timestamp']] 
+# aqui entra a ordem
 print(dataframe)
 
 #4 OUTPUT
@@ -84,12 +85,13 @@ dataframe.to_html('DATABASES/test/test_output.html')
 dataframe.to_excel('DATABASES/test/test_output.xlsx')
 
 new_dataframe = dataframe.loc[dataframe['Sample Index']==255]
-#new_dataframe = new_dataframe.reset_index() # esse acaba criando uma nova coluna chamada index com o antigo index.
+# esse acaba criando uma nova coluna chamada index com o antigo index.
+#new_dataframe = new_dataframe.reset_index()
 new_dataframe.reset_index(drop = True, inplace = True) # resetando o index pra nova tabela, descartando o antigo
 new_dataframe.to_csv('DATABASES/test/filtered_test_output.csv')
 
-dataframe.to_csv('DATABASES/test/test_output_no_commas.csv', sep='\t')
-dataframe.to_csv('DATABASES/test/test_output_no_index.csv', index = False)
+dataframe.to_csv('DATABASES/test/test_output_no_commas.csv', sep='\t') # colocando espaco ao inves de virgula
+dataframe.to_csv('DATABASES/test/test_output_no_index.csv', index = False) # tirando os index.
 
 
 
