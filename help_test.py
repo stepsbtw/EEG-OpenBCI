@@ -67,6 +67,10 @@ print(dataframe.head())
 dataframe.sort_values('Timestamp')
 print(dataframe)
 
+# MUDAR COLUNAS DE LUGAR
+dataframe = dataframe[['Timestamp (Formatted)', 'Sample Index', 'EXG Channel 0', 'EXG Channel 1', 'EXG Channel 2', 'EXG Channel 3', 'EXG Channel 4', 'EXG Channel 5', 'EXG Channel 6', 'EXG Channel 7', 'Accel Channel 0', 'Accel Channel 1', 'Accel Channel 2', 'Other', 'Other.1', 'Other.2', 'Other.3', 'Other.4', 'Other.5', 'Other.6', 'Other.7', 'Analog Channel 0', 'Analog Channel 1', 'Analog Channel 2', 'Timestamp']] # aqui entra a ordem
+print(dataframe)
+
 #4 OUTPUT
 dataframe.to_csv('DATABASES/test/test_output.csv')
 dataframe.to_json('DATABASES/test/test_output.json')
