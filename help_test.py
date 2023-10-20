@@ -32,7 +32,6 @@ print(dataframe.iloc[280,0]) # LINHA E COLUNA
 
 print(dataframe.iloc[0:256]) # CORTAR UM SEGMENTO DE DADOS.
 
-
 #3 CHECAR DATAFRAME
 
 print(dataframe.isnull().sum()) # numero de linhas com colunas faltando/ valores nulos
@@ -45,16 +44,28 @@ dataframe['Nova Coluna'] = dataframe['EXG Channel 0'] + dataframe['EXG Channel 1
 print(dataframe.head()) # da pra ver a nova coluna criada.
 
 dataframe['Nova Coluna'] /= 2 # TROCA TUDO NA COLUNA.
+dataframe['EXG Total'] = dataframe.iloc[0:-1,1:9].sum(axis = 1) # somar HORIZONTALMENTE
+print(dataframe.head())
+
+dataframe['EXG 0 Total'] = dataframe.iloc[0:-1,1].sum(axis = 0) # SOMAR VERTICALMENTE
+print(dataframe)
 
 dataframe.iloc[0,-1] -= dataframe['EXG Channel 1'][0] # troca somente o valor especificado
 print(dataframe.head())
 
-# CONDICOES:
 # aplicar filtros com ifs
-dataframe['ACCEL MODULE'] = dataframe['Accel Channel 0'].apply(lambda x: '+' if x>0 else '-') 
-#print(dataframe.head())
-#print(dataframe.tail())
-#print(dataframe[700:900])
+dataframe['ACCEL 0 MODULE'] = dataframe['Accel Channel 0'].apply(lambda x: '+' if x>0 else '-') 
+
+#SORT!
+dataframe.sort_values('Sample Index') # arruma tudinho pelo sample index
+print(dataframe.head())
+dataframe.sort_values('Accel Channel 1', ascending=False)
+print(dataframe.head())
+dataframe.sort_values(['Sample Index','Timestamp'], ascending=[True,False])
+print(dataframe.head())
+
+dataframe.sort_values('Timestamp')
+print(dataframe)
 
 #4 OUTPUT
 dataframe.to_csv('DATABASES/test/test_output.csv')
