@@ -53,7 +53,13 @@ print(dataframe)
 dataframe.iloc[0,-1] -= dataframe['EXG Channel 1'][0] # troca somente o valor especificado
 print(dataframe.head())
 
+# pesquisar itens!
+print(dataframe.loc[dataframe['Timestamp (Formatted)'].str.contains('15:41:52')])
+print(dataframe.loc[(dataframe['Accel Channel 2'] > 0)])
+print(dataframe.loc[~(dataframe['Accel Channel 2'] > 0)])
+
 # aplicar filtros com ifs
+
 dataframe['ACCEL 0 MODULE'] = dataframe['Accel Channel 0'].apply(lambda x: '+' if x>0 else '-') 
 
 #SORT!
@@ -75,6 +81,15 @@ print(dataframe)
 dataframe.to_csv('DATABASES/test/test_output.csv')
 dataframe.to_json('DATABASES/test/test_output.json')
 dataframe.to_html('DATABASES/test/test_output.html')
+dataframe.to_excel('DATABASES/test/test_output.xlsx')
+
+new_dataframe = dataframe.loc[dataframe['Sample Index']==255]
+#new_dataframe = new_dataframe.reset_index() # esse acaba criando uma nova coluna chamada index com o antigo index.
+new_dataframe.reset_index(drop = True, inplace = True) # resetando o index pra nova tabela, descartando o antigo
+new_dataframe.to_csv('DATABASES/test/filtered_test_output.csv')
+
+dataframe.to_csv('DATABASES/test/test_output_no_commas.csv', sep='\t')
+dataframe.to_csv('DATABASES/test/test_output_no_index.csv', index = False)
 
 
 
