@@ -26,16 +26,16 @@ for i, time in enumerate(list_time): # calculo da variacao.
     newnewtime = newtime[0] + newtime[1] + newtime[2]
     list_time[i] = newnewtime - init
 
-plt.subplots(nrows = 2, ncols = 4)
+
 k=0
 list_data = []
-for i in range(4):
-    for j in range(2):
+plt.subplots(nrows = 2, ncols = 4, constrained_layout = True)
+for i in range(2):
+    for j in range(4):
         list_data.append(database[f'EXG Channel {k}'].tolist())
-        plt.subplot(j+1, i+1, 1)
+        plt.subplot2grid((2,4),(i,j))
         plt.step(list_time, list_data[k])
         plt.title(f'Channel {k} by Time')
         plt.ylabel(f'EXG Channel {k}')
-        plt.grid()
-        plt.show()
         k+=1
+plt.show()
