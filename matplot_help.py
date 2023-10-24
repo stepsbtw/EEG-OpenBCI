@@ -29,7 +29,7 @@ for i, time in enumerate(list_time): # calculo da variacao.
 
 k=0
 list_data = []
-plt.subplots(nrows = 2, ncols = 4, constrained_layout = True) # criando o sistema de plots/graficos
+# criando o sistema de plots/graficos
 for i in range(2):
     for j in range(4):
         list_data.append(database[f'EXG Channel {k}'].tolist())
